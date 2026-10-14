@@ -11,3 +11,9 @@
 - **Modified Files:** [result.js](file:///c:/Users/Gabri/Desktop/projetos/PanaSight%208001/backend/tests/result.js), [db.smoke.js](file:///c:/Users/Gabri/Desktop/projetos/PanaSight%208001/backend/tests/db.smoke.js), [api.smoke.js](file:///c:/Users/Gabri/Desktop/projetos/PanaSight%208001/backend/tests/api.smoke.js), [workers.smoke.js](file:///c:/Users/Gabri/Desktop/projetos/PanaSight%208001/backend/tests/workers.smoke.js), [run-all.js](file:///c:/Users/Gabri/Desktop/projetos/PanaSight%208001/backend/tests/run-all.js).
 - **Failure Modes:** Execução isolada no contêiner `panasight_backend` para garantir acesso à rede do Docker e variáveis de ambiente.
 - **Debug Steps:** Executar `docker compose exec backend node backend/tests/run-all.js` para revalidar todos os fluxos essenciais.
+
+## [GIT-SYNC] - 2026-10-14 - Publicação e Sincronização com GitHub
+- **Reason:** Inicializar versionamento e sincronizar repositório no GitHub sob autoria obrigatória.
+- **Modified Files:** [.git/config](file:///c:/Users/Gabri/Desktop/projetos/PanaSight%208001/.git/config), [.gitignore](file:///c:/Users/Gabri/Desktop/projetos/PanaSight%208001/.gitignore).
+- **Failure Modes:** MinGit sem credential helper de GUI contornado via `credential.helper store` e token PAT.
+- **Debug Steps:** Executar `git status` e `git fetch origin` para confirmar rastreamento da branch `main`.
