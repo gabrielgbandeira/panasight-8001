@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria - SIGA </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid p-0"> 
+            <a class="navbar-brand" href="hub.html">
+                <span class="navbar-brand-text">PANAVIDEO</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="hub.html"><i class="fas fa-home me-2"></i>Hub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html"><i class="fas fa-users-cog me-2"></i>Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="auditoria.html"><i class="fas fa-shield-alt me-2"></i>Auditoria</a>
+                    </li>
+
+                    <div class="vr mx-3 d-none d-lg-block text-secondary"></div>
+
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="#" id="logout-btn">
+                            <i class="fas fa-sign-out-alt me-2"></i>Sair
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4" style="max-width: 1600px;">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="text-white fw-bold mb-0"><i class="fas fa-user-secret me-2 text-warning"></i>Logs de Auditoria</h3>
+                <p class="text-white small mb-0">Rastreamento forense de todas as ações sensíveis do sistema.</p>
+            </div>
+            <button id="btn-export-audit" class="btn btn-success fw-bold shadow">
+                <i class="fas fa-file-excel me-2"></i>BAIXAR RELATÓRIO
+            </button>
+        </div>
+
+        <div class="glass-panel p-4 mb-4">
+            <form id="filter-form">
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-2">
+                        <label class="text-white small fw-bold mb-1">Data Início</label>
+                        <input type="date" id="startDate" class="form-control form-control-sm dark-input border-0">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="text-white small fw-bold mb-1">Data Fim</label>
+                        <input type="date" id="endDate" class="form-control form-control-sm dark-input border-0">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="text-white small fw-bold mb-1">Usuário</label>
+                        <select id="userSelect" class="form-select form-select-sm dark-input border-0">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="text-white small fw-bold mb-1">Tipo de Ação</label>
+                        <select id="actionSelect" class="form-select form-select-sm dark-input border-0">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-sm w-100 fw-bold">
+                            <i class="fas fa-search me-2"></i>FILTRAR
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="glass-panel p-0 overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" style="min-width: 1000px;">
+                    <thead style="background-color: rgba(0,0,0,0.3);">
+                        <tr>
+                            <th class="ps-4 text-info text-uppercase small" style="width: 180px;">DATA/HORA</th>
+                            <th class="text-info text-uppercase small" style="width: 150px;">USUÁRIO</th>
+                            <th class="text-info text-uppercase small" style="width: 150px;">AÇÃO</th>
+                            <th class="text-info text-uppercase small" style="width: 200px;">ALVO (TABELA/ID)</th>
+                            <th class="text-info text-uppercase small">DETALHES TÉCNICOS</th>
+                            <th class="text-info text-uppercase small" style="width: 140px;">IP ORIGEM</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-table-body">
+                        <tr><td colspan="6" class="text-center py-5 text-white"><i class="fas fa-spinner fa-spin me-2"></i>Carregando logs...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark border-secondary text-white shadow-lg">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title fw-bold text-info"><i class="fas fa-code me-2"></i>Detalhes do Registro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small">Payload completo registrado no momento da ação:</p>
+                    <pre id="jsonViewer" class="mb-0"></pre>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="logout.js"></script>
+    <script src="auditoria.js"></script>
+</body>
+</html>

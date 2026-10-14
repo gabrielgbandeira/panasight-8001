@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios - SIGA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container-fluid p-0"> 
+            <a class="navbar-brand" href="hub.html">
+                <span class="navbar-brand-text">PANAVIDEO</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fas fa-microchip me-2"></i>Processamento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="autuacao.html"><i class="fas fa-gavel me-2"></i>Autuação</a>
+                    </li>
+                    
+                    <li class="nav-item admin-only d-none">
+                        <a class="nav-link" href="admin.html"><i class="fas fa-users-cog me-2"></i>Admin</a>
+                    </li>
+                    <li class="nav-item admin-only d-none">
+                        <a class="nav-link active" href="reports.html"><i class="fas fa-chart-line me-2"></i>Relatórios</a>
+                    </li>
+
+                    <div class="vr mx-3 d-none d-lg-block text-secondary"></div>
+
+                    <li class="nav-item">
+                        <a class="nav-link logout-link" href="#" id="logout-btn">
+                            <i class="fas fa-sign-out-alt me-2"></i>Sair
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        
+        <div class="glass-panel p-5">
+            <div class="mb-4 text-center">
+                <h2 class="text-white"><i class="fas fa-file-export me-2 text-primary"></i>Central de Exportação</h2>
+                <p class="text-muted">Selecione os filtros abaixo para gerar relatórios detalhados em Excel.</p>
+            </div>
+            
+            <form id="export-form">
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <label class="text-white small mb-2 fw-bold text-uppercase letter-spacing-1">Tipo de Relatório</label>
+                        <select id="filter-type" class="form-select dark-input p-3 border-0">
+                            <option value="geral">Processamento (Validação)</option>
+                            <option value="autuacao">Autuação (Multas)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="text-white small mb-2 fw-bold text-uppercase letter-spacing-1">Data Inicial</label>
+                        <input type="datetime-local" id="filter-start" class="form-control dark-input p-3 border-0">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="text-white small mb-2 fw-bold text-uppercase letter-spacing-1">Data Final</label>
+                        <input type="datetime-local" id="filter-end" class="form-control dark-input p-3 border-0">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-white opacity-75 small mb-2">Filtrar por Câmera (Opcional)</label>
+                        <select id="filter-camera" class="form-select dark-input border-0">
+                            <option value="">Todas as Câmeras</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="text-white opacity-75 small mb-2">Filtrar por Usuário (Opcional)</label>
+                        <select id="filter-user" class="form-select dark-input border-0">
+                            <option value="">Todos os Usuários</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-primary w-100 fw-bold py-3 fs-5 shadow-lg">
+                            <i class="fas fa-download me-2"></i>BAIXAR RELATÓRIO EXCEL
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="reports.js"></script>
+    <script src="logout.js"></script>
+</body>
+</html>

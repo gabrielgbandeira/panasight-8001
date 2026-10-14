@@ -1,0 +1,33 @@
+{
+  "name": "painel-validacao",
+  "version": "2.0.0",
+  "description": "Sistema de validação e autuação PanaSight.",
+  "main": "backend/server.js",
+  "scripts": {
+    "test": "node backend/tests/run-all.js",
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "docker-start": "bash backend/start.sh"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.500.0",
+    "basic-ftp": "^5.0.4",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
+    "pg": "^8.11.5",
+    "pm2": "^5.3.0",
+    "sharp": "^0.33.2"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "pkg": "^5.8.1"
+  }
+}

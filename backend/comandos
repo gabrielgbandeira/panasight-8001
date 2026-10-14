@@ -1,0 +1,31 @@
+netstat -ano | findstr :3000
+taskkill /PID 6848 /F
+
+
+docker logs -f panasight-backend-1
+
+docker exec -it panasight-backend-1 node backend/fix-ghosts.js
+
+# 1. Derruba o atual
+docker-compose down
+
+# 2. Reconstrói (Copia os arquivos novos com nomes novos)
+docker-compose build --no-cache
+
+# 3. Sobe de novo
+docker-compose up -d
+# DB
+docker exec -it siga-db-1 psql -U user -d panasight_db
+
+#Limpa os dados de processamento 
+-- 1. Limpa Evidências, Infrações e Logs de Auditoria/Importação
+TRUNCATE TABLE 
+    autuadas_infractions, 
+    evidences, 
+    audit_logs, 
+    import_logs 
+RESTART IDENTITY CASCADE;
+
+-- 2. (Opcional) Limpar usuários de teste, MANTENDO o admin e superadmin
+DELETE FROM users 
+WHERE username NOT IN ('admin', 'superadmin');

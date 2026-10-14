@@ -1,0 +1,59 @@
+# ==========================================================
+# 🌐 LINK DE ACESSO: http://localhost:8001
+# ==========================================================
+
+version: '3.8'
+
+services:
+  db:
+    container_name: panasight_db
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      # [NOVO] Força o fuso horário no Banco de Dados
+      TZ: America/Sao_Paulo
+      PGTZ: America/Sao_Paulo
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    container_name: panasight_backend
+    build: .
+    restart: always
+    environment:
+      PORT: 3000
+      # [IMPORTANTE] Define o fuso da aplicação Node
+      TZ: America/Sao_Paulo
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      JWT_SECRET: ${JWT_SECRET}
+      URL_BASE_IMAGEM: /images/
+      NODE_OPTIONS: "--max-old-space-size=4096"
+      FTP_HOST: ${FTP_HOST}
+      FTP_USER: ${FTP_USER}
+      FTP_PASS: ${FTP_PASS}
+      FTP_PORT: ${FTP_PORT}
+      FTP_REMOTE_DIR: ${FTP_REMOTE_DIR}
+    volumes:
+      - ./images:/usr/src/app/images
+    ports:
+      - "8001:3000"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m" # Limita cada arquivo de log a 10 Megabytes
+        max-file: "3"   # Mantém no máximo 3 arquivos (total de 30MB)  
+    depends_on:
+      db:
+        condition: service_healthy

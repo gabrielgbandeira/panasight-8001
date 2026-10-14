@@ -1,0 +1,22 @@
+# Dependências
+node_modules/
+
+# Arquivos de ambiente (SEGURANÇA MÁXIMA)
+.env
+
+# Banco de Dados (Dados binários não devem ir para o Git)
+postgres_data/
+
+# Conteúdo Gerado pelo Sistema (Imagens e Relatórios)
+# Mantemos a estrutura de pastas, mas ignoramos os arquivos dentro
+images/inbox/*
+images/processed/*
+!images/inbox/.gitkeep
+!images/processed/.gitkeep
+backend/public/reports/*.xlsx
+
+# Logs e Sistema
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
